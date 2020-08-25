@@ -102,3 +102,24 @@ Express is a 'server-side' or 'back-end' framework. It is not comparable to clie
   },
 -> npm run dev -> on Terminal To run the server
 `
+## navigation on time line.
+`
+0:55  - what is Express?
+2:20  - why use Express??
+4:44 - The basic syntax of a web server:
+5:58  - Basic Route Handling
+7:30 - Express middleware
+
+8:40 - setting up the environment tools
+10:37 - creating a basic Express server 
+13:00 - Create a Route
+18:40 - static folder
+21:45 - creating a simple REST API
+24:00 - MiddleWare
+30:15 - GET Request
+37:25 - express route
+41:25 - POST Request
+49:02 - PUT Request
+55:56 - delete Request
+58:00 - rendering templates
+`
