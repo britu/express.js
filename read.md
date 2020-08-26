@@ -22,25 +22,26 @@ is a function that is passed as a parameter to another JavaScript function, and 
 `
 It helps us develop asynchronous JavaScript code and keeps us safe from problems and errors. In JavaScript, the way to create a callback function is to pass it as a parameter to another function, and then to call it back right after something has happened or some task is completed.
 `
-## Documentation
-`
-Read this link:: https://expressjs.com/en/5x/api.html#express
-`
 ## What is Express?
 `
 Express is a fast, unopinionated and minimalist web framework for Nod.js.
 
 Express is a 'server-side' or 'back-end' framework. It is not comparable to client-side framworks like React, Angular & Vue. It can be used in combination with those frameworks to build full stack applications.
 `
-## Why use Express?
+## Documentation
+`
+Read this link:: https://expressjs.com/en/5x/api.html#express
+`
 
+## Why use Express?
+`
 - Makes building web applications with Node.JS MUCH easier
 - Used for both server rendered apps as well as API/Microservices
 - Extremley light, fast and free
 - Full control of request and response
 - By far the most popular Node framework
 - Great to use with client side frameworks as it's all JavaScript
-
+`
 ## What to know first
 
 - JavaScript Fundamentals(Objects, Arrays, Conditionals, etc)
