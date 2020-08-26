@@ -37,6 +37,26 @@ Express is a 'server-side' or 'back-end' framework. It is not comparable to clie
 Read this link:: https://expressjs.com/en/5x/api.html#express
 `
 
+## Index:
+- 0:55  - what is Express?
+- 2:20  - why use Express??
+- 4:44 - The basic syntax of a web server:
+- 5:58  - Basic Route Handling
+- 7:30 - Express middleware
+- 8:40 - setting up the environment tools
+- 10:37 - creating a basic Express server 
+- 13:00 - Create a Route
+- 18:40 - static folder
+- 21:45 - creating a simple REST API it's need a route
+- 22:37 - Creating a model for REST API
+- 24:00 - MiddleWare
+- 30:15 - GET Request
+- 37:25 - express route
+- 41:25 - POST Request
+- 49:02 - PUT Request
+- 55:56 - delete Request
+- 58:00 - rendering templates
+
 ### Why use Express?
 
 - Makes building web applications with Node.JS MUCH easier
@@ -240,25 +260,22 @@ module.exports = router;
       }
 
      });
+     
+### DELETE request
+    // Delete Member
+    - router.delete('/:id', (req, res) =>{
+    - const found = members.some(member => member.id === parseInt(req.params.id));
 
-### navigation on time line.
+     - if (found){
+        res.json({
+            msg: 'Member deleted',
+            members: members.filter(member => member.id !== parseInt(req.params.id))
+        })
+    }else{
+        res.status(400).json({msg: `No member with the id of ${req.params.id}`});
+    }
+  });
+  
+###  rendering templates:
 
-- 0:55  - what is Express?
-- 2:20  - why use Express??
-- 4:44 - The basic syntax of a web server:
-- 5:58  - Basic Route Handling
-- 7:30 - Express middleware
-- 8:40 - setting up the environment tools
-- 10:37 - creating a basic Express server 
-- 13:00 - Create a Route
-- 18:40 - static folder
-- 21:45 - creating a simple REST API it's need a route
-- 22:37 - Creating a model for REST API
-- 24:00 - MiddleWare
-- 30:15 - GET Request
-- 37:25 - express route
-- 41:25 - POST Request
-- 49:02 - PUT Request
-- 55:56 - delete Request
-- 58:00 - rendering templates
 
