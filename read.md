@@ -55,7 +55,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 - High Order Array Methods - forEach, map, filter
 - Arrow Functions
 
-### BASIC SERVER SYNTAX
+### Basic Server Syntax
 
 - const express = require('express');
   // Init express
@@ -69,7 +69,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
   //Listen on a port
   app.listen(5000);
   
-### BASIC ROUTE HANDLING
+### Basic Route Handling
   
   - Handling requests/routes is simple
   - app.get(), app.post(), app.delete(), etc
@@ -86,7 +86,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
   
 
 
-### EXPRESS MIDDLEWARE
+### Express Middleware
 
   Middleware functions are functions that have access to the request and response object. Express has built in middleware but middleware also comes from 3rd party packages as well as custom middleware
 
@@ -131,8 +131,31 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 
   app.listen(PORT, console.log(`the server started on port ${PORT}`));
   
+### Middleware:
+  - const logger = (req, res, next) => {
+      console.log(`${req.protocal}://${req.get('host')}${req.originalUrl}: ${moment().format()}`);
+    next();
+      }
+   
+  - // Intialise
+        app.use(logger);
+  
 ### Create a simple rest API. and its need a route
+  // this route gets all members
+  - app.get('/api/members', (req, res) => {res.json(members)});
 
+  // Get single members
+  - app.get('/api/members/:id', (req, res)=>{
+  //res.send(req.params.id);
+    - const found = members.some(member => member.id === parseInt(req.params.id));
+    if(found){
+        return  res.json(members.filter(member => member.id === parseInt(req.params.id)));
+    }else{
+        return res.status(400).json({msg: `no member with the id of ${req.params.id}`})
+    }
+   
+});
+  
 ### Create a model for rest API.
  - //array of members and return this as a JSON. save it as a MODEL.
  - const members = [
