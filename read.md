@@ -41,17 +41,17 @@ Express is a 'server-side' or 'back-end' framework. It is not comparable to clie
 - By far the most popular Node framework
 - Great to use with client side frameworks as it's all JavaScript
 
-# What to know first
-`
+## What to know first
+
 - JavaScript Fundamentals(Objects, Arrays, Conditionals, etc)
 - Basic Node.js & NPM
 - HTTP STATUS CODES
 - JSON
 - High Order Array Methods - forEach, map, filter
 - Arrow Functions
-` 
-# BASIC SERVER SYNTAX
-`
+
+## BASIC SERVER SYNTAX
+
 - const express = require('express');
   // Init express
   const app = express();
@@ -63,35 +63,35 @@ Express is a 'server-side' or 'back-end' framework. It is not comparable to clie
 
   //Listen on a port
   app.listen(5000);
-  `
-# BASIC ROUTE HANDLING
-  `
+  
+## BASIC ROUTE HANDLING
+  
   - Handling requests/routes is simple
   - app.get(), app.post(), app.delete(), etc
   - Access to params, query strings, url parts, etc
   - Express has a router so we can store routes in separate files and export
   - We can parse incoming data with the Body Parser.
-  `
+  
   app.get('/', function (req, res){
     // Fetch from database
     // Load pages
     // Return JSON
     // Full access to request & response
   });
-  `
-`
+  
 
-# EXPRESS MIDDLEWARE
-`
+
+## EXPRESS MIDDLEWARE
+
   Middleware functions are functions that have access to the request and response object. Express has built in middleware but middleware also comes from 3rd party packages as well as custom middleware
 
   - Execute any code
   - Make changes to the request/response objects
   - End response cycle
   - Call next middleware in the stack
-`
-# Setting up the environment tools
-`
+
+## Setting up the environment tools
+
   - npm init -y :: -y flag stand for yes: Will simply generate an empty npm, project without going through an interactive process. 
   - npm i express 
   - create main entry point file, index.js, app.js, server.js or any
@@ -104,12 +104,9 @@ Express is a 'server-side' or 'back-end' framework. It is not comparable to clie
     "dev" : "nodemon index"
   },
   - npm run dev :  on the Terminal
-`
 
--> npm run dev -> on Terminal To run the server
-`
 ## navigation on time line.
-`
+
 - 0:55  - what is Express?
 - 2:20  - why use Express??
 - 4:44 - The basic syntax of a web server:
@@ -128,4 +125,4 @@ Express is a 'server-side' or 'back-end' framework. It is not comparable to clie
 - 49:02 - PUT Request
 - 55:56 - delete Request
 - 58:00 - rendering templates
-`
+
