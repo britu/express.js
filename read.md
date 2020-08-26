@@ -39,7 +39,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 
 ## Index:
 - 0:55  - what is Express?
-- 2:20  - why use Express??
+- 2:20  - what to know first?
 - 4:44 - The basic syntax of a web server:
 - 5:58  - Basic Route Handling
 - 7:30 - Express middleware
