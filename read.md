@@ -57,6 +57,8 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
   - 49:02 - PUT Request
   - 55:56 - delete Request
   - 58:00 - rendering templates
+  - Home handle bar
+  - 1:07:14 - Create a form
 ````
 ### Why use Express?
 ```
@@ -299,7 +301,7 @@ module.exports = router;
          .
         ├── app.js
         └── views
-            ├── index.handlebars
+            ├── home.handlebars
             └── layouts
                 └── main.handlebars
 
@@ -325,4 +327,54 @@ module.exports = router;
       </body>
       </html>
       ```
+```
+### Render it : create a route
+  ```
+  //Homepage route
+    app.get('/', (req, res) => res.render('index'));
+```
+### Home.handlebars (content): <- index.js
+```
+  //Homepage route
+    app.get('/', (req, res) => 
+      res.render('index', {
+        title: 'Member App',
+        members
+    }));
+    
+    ## Home handlebar
+     <h1>{{{title}}}</h1>
+        <h4>Members</h4>
+        <ul class="list-group">
+            {{#each members}}
+                <li class="list-group-item">{{this.name}} : {{this.email}}</li>
 
+            {{/each}}
+        </ul>
+```
+### form in handlebar
+```
+<h1>{{{title}}}</h1>
+<h4>Members</h4>
+<form action="/api/members/" method="POST" class="mb-4">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" name="email" class="form-control">
+    </div>
+    <input type="submit" value="submit" class="btn btn-primary btn-block">
+</form>
+
+
+<ul class="list-group">
+    {{#each members}}
+        <li class="list-group-item">{{this.name}} : {{this.email}}</li>
+
+    {{/each}}
+</ul>
+
+<a href="/api/members" class="btn btn-light mt-4">Visit API</a>
+```
