@@ -38,7 +38,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 `
 
 ## Index:
-`
+```
   - 0:55  - what is Express?
   - 2:20  - what to know first?
   - 4:44 - The basic syntax of a web server:
@@ -57,27 +57,27 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
   - 49:02 - PUT Request
   - 55:56 - delete Request
   - 58:00 - rendering templates
-`
+````
 ### Why use Express?
-
+```
 - Makes building web applications with Node.JS MUCH easier
 - Used for both server rendered apps as well as API/Microservices
 - Extremley light, fast and free
 - Full control of request and response
 - By far the most popular Node framework
 - Great to use with client side frameworks as it's all JavaScript
-
+```
 ### What to know first
-
+```
 - JavaScript Fundamentals(Objects, Arrays, Conditionals, etc)
 - Basic Node.js & NPM
 - HTTP STATUS CODES
 - JSON
 - High Order Array Methods - forEach, map, filter
 - Arrow Functions
-
+```
 ### Basic Server Syntax
-
+```
 - const express = require('express');
   // Init express
   const app = express();
@@ -89,9 +89,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 
   //Listen on a port
   app.listen(5000);
-  
+ ``` 
 ### Basic Route Handling
-  
+  ```
   - Handling requests/routes is simple
   - app.get(), app.post(), app.delete(), etc
   - Access to params, query strings, url parts, etc
@@ -105,19 +105,19 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
     // Full access to request & response
   });
   
-
+```
 
 ### Express Middleware
-
+```
   Middleware functions are functions that have access to the request and response object. Express has built in middleware but middleware also comes from 3rd party packages as well as custom middleware
 
   - Execute any code
   - Make changes to the request/response objects
   - End response cycle
   - Call next middleware in the stack
-
+```
 ### Setting up the environment tools
-
+```
   - npm init -y :: -y flag stand for yes: Will simply generate an empty npm, project without going through an interactive process. 
   - npm i express 
   - create main entry point file, index.js, app.js, server.js or any
@@ -130,8 +130,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
     "dev" : "nodemon index"
   },
   - npm run dev :  on the Terminal
-
+```
 ### Creating a basic Express server and route and static folder
+```
   - const express = require('express');
   - const path = require('path');
 
@@ -151,8 +152,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
   const PORT = process.env.PORT || 5000
 
   app.listen(PORT, console.log(`the server started on port ${PORT}`));
-  
+ ```
 ### Middleware:
+```
   - const logger = (req, res, next) => {
       console.log(`${req.protocal}://${req.get('host')}${req.originalUrl}: ${moment().format()}`);
     next();
@@ -160,8 +162,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
    
   - // Intialise
         app.use(logger);
-        
+ ```     
 ### Create a model for rest API.
+```
  - //array of members and return this as a JSON. save it as a MODEL.
  - const members = [
       {
@@ -177,8 +180,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
           stauts: 'active'
       }
     ]
-    
+ ``` 
 ### Create a simple rest API, its need a route and get request together
+```
   // this route gets all members
   - app.get('/api/members', (req, res) => {res.json(members)});
 
@@ -193,8 +197,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
     }
    
 });
-  
+ ```
 ### Express Route 
+```
   - Create a folder routes/api/members.js && mainpoint place Express API route:
     - eg: app.use('/api/members', require('./routes/api/members'));
     
@@ -218,8 +223,9 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 });
 
 module.exports = router;
-
+```
 ### POST Request (add Body Parser Middleware)
+```
   - app.use(express.json());
   - app.use(express.urlencoded({extended: false}));
   ---- in member routes api ---
@@ -239,8 +245,9 @@ module.exports = router;
    -  members.push(newMember);
       res.json(members);
   });
-  
+```  
 ### PUT Request
+```
   - router.put('/:id', (req, res) => {
 
   -    const found = members.some(member => member.id === parseInt(req.params.id));
@@ -261,8 +268,9 @@ module.exports = router;
       }
 
      });
-     
+```     
 ### DELETE request
+```
     // Delete Member
     - router.delete('/:id', (req, res) =>{
     - const found = members.some(member => member.id === parseInt(req.params.id));
@@ -276,8 +284,9 @@ module.exports = router;
         res.status(400).json({msg: `No member with the id of ${req.params.id}`});
     }
   });
-  
+ ```
 ###  rendering templates: select Template from Github
+
       https://github.com/ericf/express-handlebars
       
     - express handle bar -> npm i express-handlebars -> follow the documentation
@@ -295,7 +304,7 @@ module.exports = router;
                 └── main.handlebars
 
         2 directories, 3 files
-    
+   ``` 
     **views/layouts/main.handlebars:**
 
       The main layout is the HTML page wrapper which can be reused for the different views of the app. `{{{body}}}` is used as a placeholder for where the main content should be rendered.
