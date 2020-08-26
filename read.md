@@ -38,25 +38,26 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 `
 
 ## Index:
-- 0:55  - what is Express?
-- 2:20  - what to know first?
-- 4:44 - The basic syntax of a web server:
-- 5:58  - Basic Route Handling
-- 7:30 - Express middleware
-- 8:40 - setting up the environment tools
-- 10:37 - creating a basic Express server 
-- 13:00 - Create a Route
-- 18:40 - static folder
-- 21:45 - creating a simple REST API it's need a route
-- 22:37 - Creating a model for REST API
-- 24:00 - MiddleWare
-- 30:15 - GET Request
-- 37:25 - express route
-- 41:25 - POST Request
-- 49:02 - PUT Request
-- 55:56 - delete Request
-- 58:00 - rendering templates
-
+`
+  - 0:55  - what is Express?
+  - 2:20  - what to know first?
+  - 4:44 - The basic syntax of a web server:
+  - 5:58  - Basic Route Handling
+  - 7:30 - Express middleware
+  - 8:40 - setting up the environment tools
+  - 10:37 - creating a basic Express server 
+  - 13:00 - Create a Route
+  - 18:40 - static folder
+  - 21:45 - creating a simple REST API its need a route
+  - 22:37 - Creating a model for REST API
+  - 24:00 - MiddleWare
+  - 30:15 - GET Request
+  - 37:25 - express route
+  - 41:25 - POST Request
+  - 49:02 - PUT Request
+  - 55:56 - delete Request
+  - 58:00 - rendering templates
+`
 ### Why use Express?
 
 - Makes building web applications with Node.JS MUCH easier
@@ -276,6 +277,43 @@ module.exports = router;
     }
   });
   
-###  rendering templates:
+###  rendering templates: select Template from Github
+      https://github.com/ericf/express-handlebars
+      
+    - express handle bar -> npm i express-handlebars -> follow the documentation
+    - index.js && Handlebars Middleware 
+        |
+         -> const exphbs = require('express-handlebars');
+         |
+         -> app.engine('handlebars', exphbs());
+         -> app.set('view engine', 'handlebars');
+         .
+        ├── app.js
+        └── views
+            ├── index.handlebars
+            └── layouts
+                └── main.handlebars
 
+        2 directories, 3 files
+    
+    **views/layouts/main.handlebars:**
+
+      The main layout is the HTML page wrapper which can be reused for the different views of the app. `{{{body}}}` is used as a placeholder for where the main content should be rendered.
+
+      ```handlebars
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <meta charset="utf-8">
+          <title>Example App</title>
+      </head>
+      <body>
+
+        <div class="container" mt-4>
+          {{{body}}}
+        </div>
+
+      </body>
+      </html>
+      ```
 
