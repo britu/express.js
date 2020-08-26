@@ -28,20 +28,24 @@ Express is a fast, unopinionated and minimalist web framework for Nod.js.
 
 Express is a 'server-side' or 'back-end' framework. It is not comparable to client-side framworks like React, Angular & Vue. It can be used in combination with those frameworks to build full stack applications.
 `
+## Middleware
+`
+  Middleware is a function that have access to (req, res) function. can change and add things.
+`
 ## Documentation
 `
 Read this link:: https://expressjs.com/en/5x/api.html#express
 `
 
 ## Why use Express?
-`
+
 - Makes building web applications with Node.JS MUCH easier
 - Used for both server rendered apps as well as API/Microservices
 - Extremley light, fast and free
 - Full control of request and response
 - By far the most popular Node framework
 - Great to use with client side frameworks as it's all JavaScript
-`
+
 ## What to know first
 
 - JavaScript Fundamentals(Objects, Arrays, Conditionals, etc)
@@ -106,6 +110,46 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
   },
   - npm run dev :  on the Terminal
 
+## Creating a basic Express server and route and static folder
+  - const express = require('express');
+  - const path = require('path');
+
+  - const app = express();
+
+  - // 1. Create a route
+    // app.get('/', (req, res) => {
+    //     res.send('Hello world');
+    // })
+  - // 2. app.get('/', (req, res) => {
+    //     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    // })
+
+  - // 3. Set static folder this is a kind of route
+  app.use(express.static(path.join(__dirname, 'public')));
+
+  const PORT = process.env.PORT || 5000
+
+  app.listen(PORT, console.log(`the server started on port ${PORT}`));
+  
+## Create a simple rest API. and its need a route
+
+## Create a model for rest API.
+ - //array of members and return this as a JSON. save it as a MODEL.
+ - const members = [
+      {
+          id : 1,
+          name: 'Britu',
+          email: 'britu@hotmail.com',
+          stauts: 'active'
+      },
+      {
+          id : 1,
+          name: 'Hemu',
+          email: 'hemu@hotmail.com',
+          stauts: 'active'
+      }
+    ]
+
 ## navigation on time line.
 
 - 0:55  - what is Express?
@@ -113,12 +157,12 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 - 4:44 - The basic syntax of a web server:
 - 5:58  - Basic Route Handling
 - 7:30 - Express middleware
-
 - 8:40 - setting up the environment tools
 - 10:37 - creating a basic Express server 
 - 13:00 - Create a Route
 - 18:40 - static folder
-- 21:45 - creating a simple REST API
+- 21:45 - creating a simple REST API it's need a route
+- 22:37 - Creating a model for REST API
 - 24:00 - MiddleWare
 - 30:15 - GET Request
 - 37:25 - express route
