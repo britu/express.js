@@ -139,23 +139,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
    
   - // Intialise
         app.use(logger);
-  
-### Create a simple rest API. and its need a route
-  // this route gets all members
-  - app.get('/api/members', (req, res) => {res.json(members)});
-
-  // Get single members
-  - app.get('/api/members/:id', (req, res)=>{
-  //res.send(req.params.id);
-    - const found = members.some(member => member.id === parseInt(req.params.id));
-    if(found){
-        return  res.json(members.filter(member => member.id === parseInt(req.params.id)));
-    }else{
-        return res.status(400).json({msg: `no member with the id of ${req.params.id}`})
-    }
-   
-});
-  
+        
 ### Create a model for rest API.
  - //array of members and return this as a JSON. save it as a MODEL.
  - const members = [
@@ -172,6 +156,47 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
           stauts: 'active'
       }
     ]
+    
+### Create a simple rest API, its need a route and get request together
+  // this route gets all members
+  - app.get('/api/members', (req, res) => {res.json(members)});
+
+  // Get single members
+  - app.get('/api/members/:id', (req, res)=>{
+  //res.send(req.params.id);
+    - const found = members.some(member => member.id === parseInt(req.params.id));
+    if(found){
+        return  res.json(members.filter(member => member.id === parseInt(req.params.id)));
+    }else{
+        return res.status(400).json({msg: `no member with the id of ${req.params.id}`})
+    }
+   
+});
+  
+### Express Route 
+  - Create a folder routes/api/members.js && mainpoint place Express API route:
+    - eg: app.use('/api/members', require('./routes/api/members'));
+    
+  - const express = require('express');
+  - const router = express.Router();
+  - const members = require('../../Members');
+
+    // this route gets all members
+  - router.get('/', (req, res) => {res.json(members)});
+
+    // Get single members
+  - router.get('/:id', (req, res)=>{
+    //res.send(req.params.id);
+    const found = members.some(member => member.id === parseInt(req.params.id));
+    if(found){
+        return  res.json(members.filter(member => member.id === parseInt(req.params.id)));
+    }else{
+        return res.status(400).json({msg: `no member with the id of ${req.params.id}`})
+    }
+   
+});
+
+module.exports = router;
 
 ### navigation on time line.
 
