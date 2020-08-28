@@ -436,9 +436,37 @@ module.exports = router;
 - get the link from mangoDB and put it on the created file
 - ^Config ~default.json -> 
   {
-    "mongoURI": "mongodb+srv://username:Password@cluster0.hurdp.mongodb.net/Dev?retryWrites=true&w=majority"
-  } 
-- ^config ~db.js -<
+  "mongoURI": "mongodb+srv://username:Password@cluster0.hurdp.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  }
+
+- ^config ~db.js ->
+  - const mongoose = require("mongoose");
+  - const config = require("config");
+  - const db = config.get("mongoURI");
+
+//to connect to mongo db using async await wrap it inside try / catch block
+  - const connectDB = async () => {
+    try {
+      await mongoose.connect(db, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+
+      console.log("MongoDB Connected....");
+    } catch (err) {
+      console.error(err.message);
+      // EXIT process with failure
+       process.exit(1);
+      }
+  };
+
+  module.exports = connectDB;
+
+- server.js ->
+  const connectDB = require("./config/db");
+  // Connect Database
+  connectDB();
+
 ```
   
   
