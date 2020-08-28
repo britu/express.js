@@ -225,9 +225,6 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 });
 
 module.exports = router;
--> index.js (main point)
-// Members api route
-- app.use("/api/members", require("./routes/api/members"));
 
 ```
 ### POST Request (add Body Parser Middleware)
