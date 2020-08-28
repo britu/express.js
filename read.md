@@ -468,7 +468,30 @@ module.exports = router;
   connectDB();
 
 ```
-  
+## Route Files with Express Router with api
+```
+  ^routes ^api ~auth.js ~posts.js ~profile.js ~ users.js
+  = users.js -> put this to all .js files
+    - const express = require("express");
+    - const router = express.Router();
+
+      // @route   GET api/users
+      // @desc    Test route
+      // @access  Public
+
+     - router.get("/", (req, res) => res.send("User route"));
+
+    module.exports = router;
+    
+   -> server.js:
+    //Define Routes
+      app.use("/api/users", require("./routes/api/users"));
+      app.use("/api/users", require("./routes/api/auth"));
+      app.use("/api/users", require("./routes/api/profile"));
+      app.use("/api/users", require("./routes/api/post"));
+
+    `
+
   
   
   
