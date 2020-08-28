@@ -402,7 +402,7 @@ module.exports = router;
   ### install Regular Dependencies:  
     - npm i express: main framework for our backend
     - express-validator : for data validation for post request for api to raise a error
-    - bcrypt.js : for password encryption
+    - bcrypt : for password encryption
     - config: for global variable
     - gravatar: far avatar
     - json webtoken: JWT for token
@@ -410,10 +410,36 @@ module.exports = router;
     - request: small module allow to http request for another api for github repository. 
  
   ### install Dev dependency:
-    - nodemon : constentley watch our server and don't need to run manually
-    - concurrently: run server for backend express server and front end react dev server for one single command
- ```
+    - npm i -D nodemon : constentley watch our server and don't need to run manually
+    - npm i -D concurrently: run server for backend express server and front end react dev server for one single command
   
+  ### Basic Express setup
+  - const express = require("express");
+
+  - const app = express();
+
+  - app.get("/", (req, res) => {
+      res.send("Hello world!");
+    });
+
+  - const PORT = process.env.PORT || 5000;
+
+  - app.listen(PORT, console.log(`Server is running in ${PORT}`));
+
+  ### at the end in the terminal quick Commit Git
+    git add .
+    git commit -m 'Initial commit'
+    "that will added local repository" at end of the day we put it to heroko
+ ```
+## Connecting To MongoDB with Mongoose
+```
+- get the link from mangoDB and put it on the created file
+- ^Config ~default.json -> 
+  {
+    "mongoURI": "mongodb+srv://username:Password@cluster0.hurdp.mongodb.net/Dev?retryWrites=true&w=majority"
+  } 
+- ^config ~db.js -<
+```
   
   
   
