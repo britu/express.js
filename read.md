@@ -379,9 +379,42 @@ module.exports = router;
 
 <a href="/api/members" class="btn btn-light mt-4">Visit API</a>
 ```
+############################################################### 
+## Socia network with Node.js, Express, React, Tedux & MongoDB.
+###############################################################
 
-## Vs code extention
+## Environment & Setup:
 ```
-- bracket Pair colorizer
-- es7 react redux
-- Prettier- code formatter
+  - VS code extention : bracket pair colorizer, Prettier, Es7 react/Redux/GraphQL
+  - git: deploy for herouko
+  - postman: http request to our server to test for backend, api and tested for react frontend
+  - Chrome extention: react developer tool, redux tools, 
+```
+## MongoDB Atlas Setup
+```
+```
+## Install Dependencies & Basic Express Setup
+```
+- gitignore -> node_modules/
+- git init
+- npm init : initialize package.json
+
+  ### install Regular Dependencies:  
+    - npm i express: main framework for our backend
+    - express-validator : for data validation for post request for api to raise a error
+    - bcrypt.js : for password encryption
+    - config: for global variable
+    - gravatar: far avatar
+    - json webtoken: JWT for token
+    - Mongoose: a layer on top of database to interact with database
+    - request: small module allow to http request for another api for github repository. 
+ 
+  ### install Dev dependency:
+    - nodemon : constentley watch our server and don't need to run manually
+    - concurrently: run server for backend express server and front end react dev server for one single command
+ ```
+  
+  
+  
+  
+  
