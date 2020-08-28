@@ -176,7 +176,7 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
           stauts: 'active'
       },
       {
-          id : 1,
+          id : 2,
           name: 'Hemu',
           email: 'hemu@hotmail.com',
           stauts: 'active'
@@ -225,6 +225,10 @@ Read this link:: https://expressjs.com/en/5x/api.html#express
 });
 
 module.exports = router;
+-> index.js (main point)
+// Members api route
+- app.use("/api/members", require("./routes/api/members"));
+
 ```
 ### POST Request (add Body Parser Middleware)
 ```
@@ -369,7 +373,7 @@ module.exports = router;
 </form>
 
 
-<ul class="list-group">
+<ul class="list-group">/Users/lama/Desktop/MERN/MERN Udemy/udemy_mern/readme.md
     {{#each members}}
         <li class="list-group-item">{{this.name}} : {{this.email}}</li>
 
@@ -378,3 +382,9 @@ module.exports = router;
 
 <a href="/api/members" class="btn btn-light mt-4">Visit API</a>
 ```
+
+## Vs code extention
+```
+- bracket Pair colorizer
+- es7 react redux
+- Prettier- code formatter
