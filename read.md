@@ -229,7 +229,7 @@ module.exports = router;
 ```
 ### POST Request (add Body Parser Middleware)
 ```
-  - app.use(express.json);
+  - app.use(express.json();
   - app.use(express.urlencoded({extended: false}));
   ---- in member routes api ---
   
