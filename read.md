@@ -490,8 +490,49 @@ module.exports = router;
       app.use("/api/users", require("./routes/api/profile"));
       app.use("/api/users", require("./routes/api/post"));
 
-    `
+    ```
+    
+   
+```
+## Section 3: User API Routes & JWT Authentication
+### Creating a User Model (mongoose)
+```
+ ^models ~User.js -> 
+   const mongoose = require("mongoose");
 
-  
-  
-  
+  const UserSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  });
+
+  module.exports = User = mongoose.model("user", User);
+
+```
+### Request and Body Validation
+```
+  - ~user.js from routes/api
+   - ~server.js : 
+   // Init Middleware
+  - app.use(express.json({ extended: false }));
+  https://express-validator.github.io/docs/
+  follow the docs: 
+ ```
