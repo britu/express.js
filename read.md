@@ -413,7 +413,7 @@ module.exports = router;
     - npm i -D nodemon : constentley watch our server and don't need to run manually
     - npm i -D concurrently: run server for backend express server and front end react dev server for one single command
   
-  ### Basic Express setup
+### Basic Express setup
   - const express = require("express");
 
   - const app = express();
@@ -428,8 +428,10 @@ module.exports = router;
 
   ### at the end in the terminal quick Commit Git
     git add .
-    git commit -m 'Initial commit'
-    "that will added local repository" at end of the day we put it to heroko
+    git commit -m 'Initial commit' -> that will added local repository"to put it in heroko
+    git log --stat origin/master..HEAD -> Viewing uppushed Git Commit
+    git log --branches --not --remotes -> All branches that arent pushed
+    git log --branches --not --remotes --simplify-by-decoration --decorate --oneline -> for most recent pushed
  ```
 ## Connecting To MongoDB with Mongoose
 ```
@@ -533,6 +535,36 @@ module.exports = router;
    - ~server.js : 
    // Init Middleware
   - app.use(express.json({ extended: false }));
-  https://express-validator.github.io/docs/
-  follow the docs: 
+  https://express-validator.github.io/docs/   follow the docs: 
+  
+  Codes:
+  - const bcrypt = require("bcrypt");
+  - const { body, validationResult } = require("express-validator");
+
+  // @Route POST api/users
+  // @ Desc   Test route
+  //@access Public
+
+  router.post(
+    "/",
+    [
+      body("name", "Name is required").not().isEmpty(),
+      body("email", "Please include a valid email").isEmail(),
+      body(
+        "password",
+        "Please enter a password with 6 or more characters"
+      ).isLength({ min: 6 }),
+    ],
+    (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      res.send("Hello world");
+    }
+  );
+
+  module.exports = router;
+
  ```
