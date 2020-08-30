@@ -568,3 +568,66 @@ module.exports = router;
   module.exports = router;
 
  ```
+ ## User Registration
+ ```
+ 
+router.post(
+  "/",
+  [
+    body("name", "Name is required").not().isEmpty(),
+    body("email", "Please include a valid email").isEmail(),
+    body(
+      "password",
+      "Please enter a password with 6 or more characters"
+    ).isLength({ min: 6 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, password } = req.body;
+    try {
+      //See if user exists // this go down
+      let user = await User.findOne({ email: email });
+
+      if (user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "User already exists" }] });
+      }
+
+      //get users gravatar
+      const avatar = gravatar.url(email, {
+        s: "200",
+        r: "pg",
+        d: "mm",
+      });
+
+      //create a new instance of user taken from user avatar continue
+      user = new User({
+        name,
+        email,
+        avatar,
+        password,
+      });
+
+      //enrypt password using bcryptjs create a salt for hashing it
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+
+      //Return jsonwebtoken
+      res.send("User registered");
+    } catch (err) {
+      console.error(err.message);
+    }
+    res.send("User Route");
+  }
+);
+
+module.exports = router;
+ ```
