@@ -568,7 +568,7 @@ module.exports = router;
   module.exports = router;
 
  ```
- ## User Registration
+ ### User Registration
  ```
  
 router.post(
@@ -652,3 +652,8 @@ module.exports = router;
         }
       );
  ```
+### custom Auth Middleware & JWT Verify
+```
+Create a custome middleware
+
+```
