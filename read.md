@@ -570,7 +570,24 @@ module.exports = router;
  ```
  ### User Registration
  ```
- 
+- const express = require("express");
+- const router = express.Router();
+- const gravatar = require("gravatar");
+- const bcrypt = require("bcryptjs");
+- const { body, validationResult } = require("express-validator");
+
+- const User = require("../../models/User");
+---------Header ------
+  // See if user exists
+
+    //Get users gravatar
+
+    // Encrypt password
+
+    // Sending back jsonwebtoken once user registered. get them into the database, and 
+    return so they can use them to access protected route 
+   
+
 router.post(
   "/",
   [
@@ -652,8 +669,57 @@ module.exports = router;
         }
       );
  ```
-### custom Auth Middleware & JWT Verify
+### custom Auth Middleware & JWT Verify || send the token to authenticate to access protected route
 ```
 Create a custome middleware
+^middleware ~auth.js
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
+module.exports = function (req, res, next) {
+  // Get token from header
+  const token = req.header("x-auth-token");
+
+  //check if not token
+  if (!token) {
+    return res.status(401).json({ msg: "No token, authorization denied" });
+  }
+
+  //Veryfy token
+  try {
+    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    //req object assign a value to user and user is a payload
+    req.user = decoded.user;
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: "Token is not valid" });
+  }
+};
+
+
+
+>>> second page
+- implemented this to protected route
+  ^routes^api~auth.js.  :: Adding middleware
+  const express = require("express");
+const router = express.Router();
+const auth = require("../../middleware/auth");
+
+const User = require("../../models/User");
+
+//@rout        GET api/users
+//Description   Test route
+//@access       Public
+
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+module.exports = router;
 ```
