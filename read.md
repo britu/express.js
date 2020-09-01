@@ -526,7 +526,7 @@ module.exports = router;
     },
   });
 
-  module.exports = User = mongoose.model("user", User);
+  module.exports = User = mongoose.model("user", UserSchema);
 
 ```
 ### Request and Body Validation
