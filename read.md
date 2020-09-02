@@ -653,6 +653,9 @@ module.exports = router;
  ```
  //Return jsonwebtoken
     - import jsonwebtoken -> "jwtSecret":"mysecretekey" on default.json
+    
+    - const jwt = require("jsonwebtoken");
+    - const config = require("config");
       const payload = {
         user: {
           id: user.id,
