@@ -824,3 +824,152 @@ router.post(
 module.exports = router;
 
 ```
+# Section 4
+### Creatint The Profile model
+```
+^models~Profile:
+ const mongoose = "mongoose";
+
+const ProfileSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
+  company: {
+    type: String,
+  },
+  website: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  status: {
+    type: String,
+    required: true,
+  },
+  skills: {
+    type: [string],
+    required: true,
+  },
+  bio: {
+    type: String,
+  },
+  githubusername: {
+    type: String,
+  },
+  experiences: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      company: {
+        type: String,
+        required: true,
+      },
+      location: {
+        type: String,
+      },
+      from: {
+        type: Date,
+        required: true,
+      },
+      to: {
+        type: Date,
+      },
+      current: {
+        type: Boolean,
+        default: false,
+      },
+      description: {
+        type: String,
+      },
+    },
+  ],
+  education: [
+    {
+      school: {
+        type: String,
+        required: true,
+      },
+      degree: {
+        type: String,
+        required: true,
+      },
+      fieldofstudy: {
+        type: String,
+        required: true,
+      },
+      from: {
+        type: Date,
+        required: true,
+      },
+      to: {
+        type: String,
+      },
+      current: {
+        type: Boolean,
+        default: false,
+      },
+      description: {
+        type: String,
+      },
+    },
+  ],
+  social: {
+    youtube: {
+      type: String,
+    },
+    twitter: {
+      type: String,
+    },
+    facebook: {
+      type: String,
+    },
+    kujedub: {
+      type: String,
+    },
+    instagram: {
+      type: String,
+    },
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = Profile = mongoose.model("profile", ProfileSchema);
+
+```
+### Get Current User Profile
+```
+^route^api~profile
+const express = require("express");
+const router = express.Router();
+const auth = require("../../middleware/auth");
+const { body, validationResult } = require("express-validator");
+const Profile = require("../../models/Profile");
+const User = require("../../models/User");
+
+//@rout        GET api/profile/me
+//Description   Get current users profile
+//@access       Private
+
+router.get("/me", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate("user", ["name", "avatar"]);
+    if (!profile) {
+      return res.status(400).json({ msg: "There is no profile for this user" });
+    }
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+```
