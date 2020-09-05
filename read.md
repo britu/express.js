@@ -947,11 +947,15 @@ module.exports = Profile = mongoose.model("profile", ProfileSchema);
 ```
 ^route^api~profile
 const express = require("express");
+const request = require("request");
+const config = require("config");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { body, validationResult } = require("express-validator");
+
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+
 
 //@rout        GET api/profile/me
 //Description   Get current users profile
@@ -1086,8 +1090,11 @@ router.post(
   }
 );
 
+```
+### 18. Get All Profiles & Profile By User Id
+```
 //@rout        GET All api/profile/
-//Description   Get current users profile
+//Description   GET current users profile
 //@access       Public
 
 router.get("/", async (req, res) => {
@@ -1101,7 +1108,7 @@ router.get("/", async (req, res) => {
 });
 
 //@rout        GET All api/profile/user/:user_id
-//Description   Get profile by user ID
+//Description   GET profile by user ID
 //@access       Public
 
 router.get("/user/:user_id", async (req, res) => {
@@ -1121,9 +1128,11 @@ router.get("/user/:user_id", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
+```
+### 19. Delete Profile & User
+```
 //@rout        GET All api/profile/
-//Description   Delete Profile, user & posts
+//Description   DELETE Profile, user & posts
 //@access       Private
 
 router.delete("/", auth, async (req, res) => {
@@ -1145,9 +1154,11 @@ router.delete("/", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
+```
+### 20. Add profile Experience 
+```
 //@rout        GET All api/profile/expreience
-//Description   Add profile experience
+//Description   ADD PROFILE EXPERIENCE
 //@access       Private
 
 router.put(
@@ -1200,7 +1211,9 @@ router.put(
     }
   }
 );
-
+```
+### 21. Delete Profile Experience
+```
 //@rout        DELETE All api/profile/expreience/:exp_id
 //Description   Delete experience from profile
 //@access       Private
@@ -1222,9 +1235,11 @@ router.delete("/experiences/:exp_id", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
+```
+### 22. Add and Delete Profile Education
+```
 //@rout        GET All api/profile/education
-//Description   Add profile education
+//Description   ADD profile EDUCATION
 //@access       Private
 
 router.put(
@@ -1280,7 +1295,7 @@ router.put(
 );
 
 //@rout        DELETE All api/profile/education/:edu_id
-//Description   Delete experience from profile
+//Description   DELETE profile EXPERIENCE
 //@access       Private
 
 router.delete("/education/:edu_id", auth, async (req, res) => {
@@ -1301,6 +1316,9 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
   }
 });
 
+```
+### 23. Get Github Repos for Profile
+```
 //@rout        Get api/profile/github/:username
 //Description   Get user repos from Github
 //@access       Public
@@ -1321,7 +1339,7 @@ router.get("/github/:username", (req, res) => {
       if (error) console.error(error);
 
       if (response.statusCode !== 200) {
-        res.status(404).json({ msg: " No Github profile found" });
+        return res.status(404).json({ msg: " No Github profile found" });
       }
 
       res.json(JSON.parse(body)); // it's gonna be
@@ -1333,20 +1351,307 @@ router.get("/github/:username", (req, res) => {
 });
 
 module.exports = router;
+```
+# 5. POST API ROUTES
+```
+Section change to Post Api Routes
+```
+### 24. Creating the Post Model
+```
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-/*
-{
-	"company":"Britu Media",
-	"status": "Developer",
-	"website":"http://www.mero.esy.es",
-	"skills": "HTML, CSS, PHP, Python",
-	"location": "London",
-	"Bio": "I am a Senior Developer and insructor for myself",
-	"githubusername":"britu",
-	"twitter": "https://twitter.com/britu",
-	"facebook": "https://facebook.com/britu",
-	"youtube": "https://youtube.com/britu"
-}
-*/
+const PostSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+  },
+  text: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+  },
+  avatar: {
+    type: String,
+  },
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    },
+  ],
+  comments: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+      text: {
+        type: String,
+        required: true,
+      },
+      avatar: {
+        type: String,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
+  date: {
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+});
 
+module.exports = Post = mongoose.model("post", PostSchema);
+
+```
+### 25. Add Post Route
+```
+const express = require("express");
+const router = express.Router();
+//error checking express validator
+const { body, validationResult } = require("express-validator");
+const auth = require("../../middleware/auth");
+
+const Post = require("../../models/Post");
+const Profile = require("../../models/Profile");
+const User = require("../../models/User");
+
+//@rout        POST api/post
+//Description  Create a POST
+//@access       Private
+
+router.post(
+  "/",
+  [auth, body("text", "Text is required").not().isEmpty()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      //const user = await User.findById(req.user.id).isSelected("-password");
+      const user = await User.findById(req.user.id).select("-password");
+
+      const newPost = new Post({
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: req.user.id,
+      });
+      const post = await newPost.save();
+      res.json(post);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+```
+### 26. Get and Delete Post Routes
+```
+//@rout        GET api/post
+//Description  Get all POST
+//@access       Private
+
+router.get("/", auth, async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ date: -1 });
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+//@rout        GET api/post/:id
+//Description  Get Post by id
+//@access       Private
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+    res.status(500).send("Server Error");
+  }
+});
+
+//@rout        Delete api/post/:id
+//Description  Delete a post
+//@access       Private
+
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+    //chek user
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not autohrized" });
+    }
+
+    await post.remove();
+    res.json({ msg: "Post removed" });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+    res.status(500).send("Server Error");
+  }
+});
+```
+### 27. Post Like & Unlike Routes
+```
+//@rout        Put api/post/like/:id
+//Description  Like a post
+//@access       Private
+
+router.put("/like/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    //check if the post has already been liked
+    if (
+      post.likes.filter((like) => like.user.toString() === req.user.id).length >
+      0
+    ) {
+      return res.status(400).json({ msg: "Post already liked" });
+    }
+    post.likes.unshift({ user: req.user.id });
+    await post.save();
+    res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+//@rout        Put api/post/unlike/:id
+//Description  Like a post
+//@access       Private
+
+router.put("/unlike/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    //check if the post has already been liked
+    if (
+      post.likes.filter((like) => like.user.toString() === req.user.id)
+        .length === 0
+    ) {
+      return res.status(400).json({ msg: "Post has not yet been liked" });
+    }
+    // Get remove index
+    const removeIndex = post.likes
+      .map((like) => like.user.toString())
+      .indexOf(req.user.id);
+
+    //console.log(removeIndex);
+
+    post.likes.splice(removeIndex, 1);
+    //console.log(post.likes.splice(removeIndex, 1));
+
+    await post.save();
+    res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+```
+### 28. Add & Remove Comment Routes
+```
+
+//@rout        POST api/posts/comment/:id
+//Description  Comment on a post
+//@access       Private
+
+router.post(
+  "/comment/:id",
+  [auth, body("text", "Text is required").not().isEmpty()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      const user = await User.findById(req.user.id).select("-password");
+      const post = await Post.findById(req.params.id);
+
+      const newComment = {
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: req.user.id,
+      };
+      post.comments.unshift(newComment);
+
+      await post.save();
+      res.json(post.comments);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+//@rout        DELETE api/posts/comment/:id/:comment_id
+//Description  Delete Comment
+//@access       Private
+
+router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
+  try {
+    //first get the post
+    const post = await Post.findById(req.params.id);
+
+    //Pull comment out
+    const comment = post.comments.find(
+      (comment) => comment.id === req.params.comment_id
+    );
+    //Make sure comment exists
+    if (!comment) {
+      return res.status(404).json({ msg: "Comment does not exist" }); //
+    }
+    // Check user
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+    //Get remove index
+
+    const removeIndex = post.comments
+      .map((comment) => comment.user.toString())
+      .indexOf(req.user.id);
+    //console.log(removeIndex);
+
+    post.comments.splice(removeIndex, 1);
+    //console.log(post.comments.splice(removeIndex, 1));
+
+    await post.save();
+    res.json(post.comments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+module.exports = router;
 ```
