@@ -1,15 +1,22 @@
 # frontEnd React installation 
+## VS code: Auto rename tag
 ### 29. - 31
 ```
 npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension moment react-moment
 We need to add proxy for axious
+  ^client~package.json 
+  },
+  "proxy": "http://localhost:5000"
+  
 import React, { Fragment } from "react";
 App.js file -> in Const App and use <Fragment>
 ```
 ### .31 React and cunccurent setup
 ```
 npx create-react-app client
-npm i concurrent
+npm i concurrent -D dev dependencies
+rm -rf .git
+npm install --save array-unique
 ```
 
 ### 32. Clean up & Initial Components
